@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Paddle2
+  - Paddle1
+  - Collider
+  - Collider1
   layers:
   - Default
   - TransparentFX
