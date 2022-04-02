@@ -8,6 +8,11 @@ TagManager:
   - Paddle1
   - Collider
   - Collider1
+  - Left
+  - Right
+  - Middle
+  - Top
+  - Bottom
   layers:
   - Default
   - TransparentFX

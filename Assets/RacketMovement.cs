@@ -12,9 +12,9 @@ public class RacketMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Invoke("GoBall", 2);
+        //Invoke("GoBall", 2);
         //  rb.AddForce(new Vector2(20, -15)*Time.deltaTime);
-
+        rb.velocity = new Vector2(3f, 0f);
     }
 
     // Update is called once per frame
@@ -34,66 +34,53 @@ public class RacketMovement : MonoBehaviour
         {
             //rb.velocity = new Vector2(2f, rb.velocity.y);
         }
-       /* if (f == 1)
-        {
-            float x = Random.Range(1, 3);
-            float y = Random.Range(1, 3);
-            rb.velocity = new Vector2(x*2, y*2);
-        }*/
+        /* if (f == 1)
+         {
+             float x = Random.Range(1, 3);
+             float y = Random.Range(1, 3);
+             rb.velocity = new Vector2(x*2, y*2);
+         }*/
         //GoToAngle(targetAngle);
+       
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        //float y;
+        if (collision.gameObject.tag == "Collider")
+            rb.velocity = new Vector2(rb.velocity.x, 1);
+        if (collision.gameObject.tag == "Collider1")
+            rb.velocity = new Vector2(rb.velocity.x, -1);
+
+        Debug.Log(collision.gameObject);
+        // Debug.Log(vel.y);
+        
        
-        if (collision.gameObject.tag == "Paddle2" || collision.gameObject.tag == "Paddle1")
-        {
-
-            
-                Vector2 vel;
-                vel.x = rb.velocity.x;
-                vel.y = (rb.velocity.y / 2) + (collision.collider.attachedRigidbody.velocity.y / 3);
-                rb.velocity = vel;
-            
-        }
-        else if (collision.gameObject.tag == "Paddle1")
-        {
-           
-            //f = 1;
-        }
-        if(collision.gameObject.tag=="Collider")
-        {
-          
-        }
-
     }
-    private void GoToAngle(Vector3 eulerAngle)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Quaternion targetRotation = Quaternion.Euler(eulerAngle);
-        Vector3 targetDirection = targetRotation * Vector3.forward;
-        float speed = rb.velocity.magnitude;
-        rb.velocity = speed * targetDirection;
+        float y = 0;
+        if (collision.gameObject.tag == "Top")
+            y = 1;
+        else if (collision.gameObject.tag == "Bottom")
+            y = -1;
+        rb.velocity = new Vector2(rb.velocity.x, y);
+
+
+
     }
     void GoBall()
     {
         float rand = Random.Range(0, 2);
         if (rand < 1)
         {
-            rb.AddForce(new Vector2(20, -15));
+            rb.AddForce(new Vector2(20, 2)*3);
         }
         else
         {
-            rb.AddForce(new Vector2(-20, -15));
+            rb.AddForce(new Vector2(-20, 2)*3);
         }
     }
-    void RestartGame()
-    {
-        ResetBall();
-        Invoke("GoBall", 1);
-    }
-    void ResetBall()
-    {
-        rb.velocity = Vector2.zero;
-        transform.position = Vector2.zero;
-    }
+  
 }
