@@ -10,25 +10,28 @@ public class PaddleMovement : MonoBehaviour
     public GameObject Paddle2;
     GameObject paddle;
     public float paddleSpeed;
+    RacketMovement racketMovement;
     void Start()
     {
-        
+        racketMovement = GameObject.Find("Racket").GetComponent<RacketMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        float inputY = Input.GetAxis("Vertical");
-        if(transform.position.x<=0f)
+        if (racketMovement.IsGameOver == false)
         {
-            paddle = Paddle1;
+            float inputY = Input.GetAxis("Vertical");
+            if (transform.position.x <= 0f)
+            {
+                paddle = Paddle1;
+            }
+            else if (transform.position.x > 0f)
+            {
+                paddle = Paddle2;
+            }
+            paddle.transform.Translate(new Vector2(0f, paddleSpeed * inputY * Time.deltaTime));
         }
-        else if(transform.position.x>0f)
-        {
-            paddle = Paddle2;
-        }
-        paddle.transform.Translate(new Vector2(0f,paddleSpeed*inputY*Time.deltaTime));
 
     }
 }

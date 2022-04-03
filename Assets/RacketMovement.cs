@@ -11,20 +11,37 @@ public class RacketMovement : MonoBehaviour
     int f = 0;
     public Text paddle1score;
     public Text paddle2score;
+    public GameObject winPanel;
+    public Text winText;
     int score1;
     int score2;
+    public bool IsGameOver = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         //Invoke("GoBall", 2);
         //  rb.AddForce(new Vector2(20, -15)*Time.deltaTime);
-        rb.velocity = new Vector2(3f, 0f);
+        rb.velocity = new Vector2(4f, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+
+        if (IsGameOver == true)
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        if(score1==10)
+        {
+            winPanel.SetActive(true);
+            winText.text = "Player1 Win";
+            IsGameOver = true;
+        }
+        if(score2==10)
+        {
+            winPanel.SetActive(true);
+            winText.text = "Player2 Win";
+            IsGameOver = true;
+        }
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
