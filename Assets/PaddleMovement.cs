@@ -9,6 +9,7 @@ public class PaddleMovement : MonoBehaviour
     public GameObject Paddle1;
     public GameObject Paddle2;
     GameObject paddle;
+    public float paddleSpeed;
     void Start()
     {
         
@@ -27,7 +28,7 @@ public class PaddleMovement : MonoBehaviour
         {
             paddle = Paddle2;
         }
-        paddle.transform.Translate(new Vector2(0f,2*inputY*Time.deltaTime));
+        paddle.transform.Translate(new Vector2(0f,paddleSpeed*inputY*Time.deltaTime));
 
     }
 }

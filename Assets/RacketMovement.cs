@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RacketMovement : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class RacketMovement : MonoBehaviour
 
     Rigidbody2D rb;
     int f = 0;
-    
+    public Text paddle1score;
+    public Text paddle2score;
+    int score1;
+    int score2;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,67 +24,42 @@ public class RacketMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* int rand = Random.Range(0, 2);
-         Debug.Log(rand);
-         if(rand<1)
-         {
-             rb.AddForce(new Vector2(20, -15));
-         }
-         else
-         {
-             rb.AddForce(new Vector2(20, 15));
-         }*/
-       if(f==0)
-        {
-            //rb.velocity = new Vector2(2f, rb.velocity.y);
-        }
-        /* if (f == 1)
-         {
-             float x = Random.Range(1, 3);
-             float y = Random.Range(1, 3);
-             rb.velocity = new Vector2(x*2, y*2);
-         }*/
-        //GoToAngle(targetAngle);
-       
+      
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
         //float y;
-        if (collision.gameObject.tag == "Collider")
+        if (collision.gameObject.tag == "Collider")                 // When it touches bottom collider
             rb.velocity = new Vector2(rb.velocity.x, 1);
         if (collision.gameObject.tag == "Collider1")
-            rb.velocity = new Vector2(rb.velocity.x, -1);
+            rb.velocity = new Vector2(rb.velocity.x, -1);           // When object touches top collider
+        if (collision.gameObject.tag == "Left")                    // Score updating of right paddle
+        {
+            score2 += 1;
+            paddle2score.text = score2.ToString();
+        }
+        if (collision.gameObject.tag == "Right")                //Score updating of left paddle
+        {
+            score1 += 1;
+            paddle1score.text = score1.ToString();
+        }
 
-        Debug.Log(collision.gameObject);
+        //Debug.Log(collision.gameObject);
         // Debug.Log(vel.y);
-        
-       
+
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         float y = 0;
-        if (collision.gameObject.tag == "Top")
+        if (collision.gameObject.tag == "Top")      // When racket touches the top of paddle, then moves up
             y = 1;
-        else if (collision.gameObject.tag == "Bottom")
+        else if (collision.gameObject.tag == "Bottom") // when racket touches the bottom of paddle , then moves down
             y = -1;
-        rb.velocity = new Vector2(rb.velocity.x, y);
-
-
+        rb.velocity = new Vector2(rb.velocity.x, y);     // If touches at the middle , then no velocity 
 
     }
-    void GoBall()
-    {
-        float rand = Random.Range(0, 2);
-        if (rand < 1)
-        {
-            rb.AddForce(new Vector2(20, 2)*3);
-        }
-        else
-        {
-            rb.AddForce(new Vector2(-20, 2)*3);
-        }
-    }
-  
+   
 }
